@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid home-page">
+	<div class="row">
+		<div class="col-xs-12">
+		    <div class="row">
+                <div class="col-xs-12 header">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img class="logo" class="pull-left" src="static/images/WJLogoFullName.png" alt="Logo" />
+                            </div>
+                            <div class="col-xs-10">
+                                <div class="cre-btns pull-right">
+                                    <a href="javascript:;" data-toggle="modal" data-target="#loginModal">Login</a> |
+                                    <a href="javascript:;" data-toggle="modal" data-target="#singupModal">Register</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+		    <div class="row">
+                <div class="col-xs-12 home-page-main">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row hard-coded-links" style="margin-top: 105px;">
+                                    <div class="col-md-6">
+                                        <a href="https://www.google.com" target="_blank">
+                                            <img src="/static/images/GoogleWidget.png">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="https://www.yahoo.com" target="_blank">
+                                            <img src="/static/images/YahooWidget.png">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="https://www.youtube.com" target="_blank">
+                                            <img src="/static/images/YoutubeWidget.png">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="https://www.facebook.com" target="_blank">
+                                            <img src="/static/images/FacebookWidget.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-content">
+                                    <h1>OWN YOUR HOME PAGE</h1>
+                                    <h4>Widget Jack allows you to access the best of the web through personalized widgets. Clean, simple and convenient.</h4>
+                                    <h3><a href="#">Sign-up for your free webpage now!</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+  	    </div>
+    </div>
+</div>
+
+<footer class="footer" style="bottom: 0px; position: absolute;">
+    <div class="container-fluid home-page">
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Copyright © 2017 Widget Jack | All Rights Reserved | Contact Us</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-label="Login Modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                <form id="singin_form" method="post">
+                    {% csrf_token %}
+                    <input autofocus="" id="email" name="username" type="email" required="required" placeholder="Email *">
+                    <input id="password" name="password" type="password" required="required" placeholder="Password *">
+                    <input class="btn btn-submit" id="login-button" type="submit" name="submit" value="Sign in" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="singupModal" tabindex="-1" role="dialog" aria-label="Signup Modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Register</h4>
+            </div>
+            <div class="modal-body">
+                <form id="registration_form" action="/register_user/" method="post">
+                    {% csrf_token %}
+
+                    <input placeholder="First Name" name="first_name" id="first_name" type="text" />
+                    <input placeholder="Last Name" name="last_name" id="last_name" type="text" />
+                    <input placeholder="Email *" name="email" id="email" type="email" required="required" />
+
+                    <select name="gender" id="gender" required="required">
+                        <option value="">-- Select Gender --</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+
+                    <input placeholder="Zip Code" id="zip_code" name="zip_code" type="text"
+                        pattern="(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]\d[abceghjklmnprstvwxyzABCEGHJKLMNPRSTVWXYZ]( )?\d[abceghjklmnprstvwxyzABCEGHJKLMNPRSTVWXYZ]\d$)|(^\d{5}(-\d{4})?$)" />
+
+                    <input placeholder="Birthday" id="date_of_birth" name="date_of_birth" type="date" value="1980-01-01" required="false" />
+
+                    <input placeholder="Password *" name="password1" id="password1" type="password" required="required" />
+                    <input placeholder="Confirm Password *" name="password2" id="password2" type="password" required="required" />
+
+                    <input class="btn btn-submit" type="submit" name="submit" value="Register Now" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

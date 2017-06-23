@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="personal-background-image" style="background-image: url('{{ user_background }}')"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 bg-changer">
+
+            <div class="row">
+                <div class="col-xs-12 header">
+                    <div class="content">
+                        <img class="logo" class="pull-left" src="/static/images/WJLogoFullName.png" alt="Logo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 profiler-section">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h2>Welcome</h2>
+                                        <p>{{ user.email }}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-sm-offset-7">
+                                        <a class="signout-btn" href="/logout_user">SIGN OUT</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 icons-droppable-section">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-1">
+                                <div class="row target-droppable remove-icons-class">
+                                    {% for selected_widget in selected_users_widgets %}
+                                    <div class="col-md-3">
+                                        <a href="{{ selected_widget.widget.link }}" data-id="{{ selected_widget.widget_id }}" data-user-widget-id="{{ selected_widget.id }}" target="_blank" class="ui-draggable ui-draggable-handle count-clicks">
+                                            <div class="ellipse-bottom"></div>
+                                            <img src="/media/{{ selected_widget.widget.icon }}">
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 icons-droppable-origin">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="origin-content oc-featured">
+                                    <div class="oc-header">
+                                        <h3>Featured</h3>
+                                    </div>
+                                    <div class="oc-main">
+                                        <ul>
+                                            {% for widget in featured_widgets %}
+                                            <li>
+                                                <a href="{{ widget.link }}" data-id="{{ widget.id }}" target="_blank"><img src="/media/{{ widget.icon }}" alt="{{ widget.name }}" >{{ widget.name }}</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="origin-content oc-top-25">
+                                    <div class="oc-header">
+                                        <h3>Top 25</h3>
+                                    </div>
+                                    <div class="oc-main">
+                                        <ul>
+                                            {% for widget in top_widgets %}
+                                            <li>
+                                                <a href="{{ widget.link }}" data-id="{{ widget.id }}" target="_blank"><img src="/media/{{ widget.icon }}" alt="{{ widget.name }}">{{ widget.name }}</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="origin-content oc-background">
+                                    <div class="oc-header">
+                                        <h3>Background</h3>
+                                    </div>
+                                    <div class="oc-main">
+                                        <ul>
+                                            {% for bg_image in backgrounds %}
+                                            <li>
+                                                <img src="/media/{{ bg_image.image }}" id="{{ bg_image.id }}" alt="{{ bg_image.name }}" class="background-list-item">
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+	<div class="container-fluid home-page">
+		<div class="row">
+			<div class="col-xs-12">
+				<p>Copyright © 2017 Widget Jack | All Rights Reserved | Contact Us</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
