@@ -155,3 +155,4 @@ LOGIN_REDIRECT_URL = '/personalized'
 LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = "widgets.User"
 AUTHENTICATION_BACKENDS = ["widgets.ext.auth.AuthBackend"]
+ALLOWED_HOSTS=['ec2-54-190-13-51.us-west-2.compute.amazonaws.com']
