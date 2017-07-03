@@ -8,7 +8,13 @@ html {
 
 .content {
   margin: 0 auto;
-  width: 80%; }
+  width: 100%; }
+
+@media (min-width: 786px) {
+  .content {
+    width: 80%;
+  }
+}
 
 .header {
   background-color: #e35325;
@@ -110,6 +116,14 @@ html {
   color: #e35325;
   text-align: center;
   width: 100%;
+  bottom: 0px;
+  position: fixed;
+}
+
+@media (min-width: 786px) {
+  .footer {
+    position: absolute;
+  }
 }
 
   .footer p {
