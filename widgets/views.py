@@ -3,12 +3,12 @@ import time
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 
 from widgets.forms import RegistrationForm
-from widgets.models import BackgroundImages, Widget, UsersWidgets
+from widgets.models import BackgroundImages, Widget, UsersWidgets, User
 
 
 def home(request):
@@ -79,7 +79,14 @@ def update_count(request):
 class RegistrationUserView(FormView):
     form_class = RegistrationForm
 
+    def form_invalid(self, form):
+        return JsonResponse(form.errors, status=400)
+
     def form_valid(self, form):
+        user = User.objects.filter(email=form.instance.email)
+        if user:
+            return JsonResponse({'Email': ['This email already exists.']}, status=400)
+
         form.instance.username = time.time()
         form.save()
 
@@ -92,4 +99,4 @@ class RegistrationUserView(FormView):
 
         login(self.request, form.instance)
 
-        return redirect('/personalized')
+        return JsonResponse({'success': 'Success'}, status=201)

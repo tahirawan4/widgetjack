@@ -1,7 +1,67 @@
 $(document).ready(function() {
     // Home Page
     $('#singin_form').parsley();
-    $('#registration_form').parsley();
+
+    $('#signup-button').on('click', function() {
+        var first_name = $("#first_name").val();
+        var last_name = $("#last_name").val();
+        var email = $("#register-email").val();
+        var gender = $("#gender").val();
+        var zip_code = $("#zip_code").val();
+        var date_of_birth = $("#date_of_birth").val();
+        var password1 = $("#password1").val();
+        var password2 = $("#password2").val();
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+            beforeSend: function(xhr) {
+                // Before AJAX request send
+                var validatedForm = $('#registration_form').parsley();
+                validatedForm.validate();
+                if (!validatedForm.isValid()) {
+                    xhr.abort();
+                    console.log('Request Failed, Form is not valid');
+                }
+
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                $('#error-container').html('').addClass('hide');
+            },
+            type: "POST",
+            url: "/register_user/",
+            data: "first_name="+ first_name +"&last_name="+ last_name +"&email="+ email +"&gender="+ gender +"&zip_code="+ zip_code
+            +"&date_of_birth="+ date_of_birth + "&password1=" + password1 + "&password2=" + password2,
+            success: function(xhr) {
+                // On Success
+                window.location.href = "/personalized";
+                $('#error-container').html('').addClass('hide');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                var textResponse =  'Oops: <br/>';
+                var jsonResponse = xhr.responseJSON;
+
+                for (var property in jsonResponse) {
+                    if (jsonResponse.hasOwnProperty(property)) {
+                        var propertyText = '';
+
+                        if (property == 'password1') {
+                            propertyText = 'Password';
+                        }
+                        else if (property == 'password2') {
+                            propertyText = 'Confirm Password';
+                        }
+                        else {
+                            propertyText = property;
+                        }
+
+                        textResponse += propertyText + ': ' + jsonResponse[property].join(' ');
+                    }
+                    textResponse += '<br/>';
+                }
+
+                $('#error-container').html(textResponse).removeClass('hide');
+            }
+        });
+    });
 
     // Drag n Drop to Add
     $(".origin-content a").draggable({

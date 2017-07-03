@@ -64,7 +64,7 @@
     </div>
 </div>
 
-<footer class="footer" style="bottom: 0px; position: absolute;">
+<footer class="footer">
     <div class="container-fluid home-page">
         <div class="row">
             <div class="col-xs-12">
@@ -104,9 +104,11 @@
                 <form id="registration_form" action="/register_user/" method="post">
                     {% csrf_token %}
 
+                    <div id="error-container" class="hide alert alert-danger"></div>
+
                     <input placeholder="First Name" name="first_name" id="first_name" type="text" />
                     <input placeholder="Last Name" name="last_name" id="last_name" type="text" />
-                    <input placeholder="Email *" name="email" id="email" type="email" required="required" />
+                    <input placeholder="Email *" name="email" id="register-email" type="email" required="required" />
 
                     <select name="gender" id="gender" required="required">
                         <option value="">-- Select Gender --</option>
@@ -120,9 +122,12 @@
                     <input placeholder="Birthday" id="date_of_birth" name="date_of_birth" type="date" value="1980-01-01" required="false" />
 
                     <input placeholder="Password *" name="password1" id="password1" type="password" required="required" />
-                    <input placeholder="Confirm Password *" name="password2" id="password2" type="password" required="required" />
+                    <input placeholder="Confirm Password *" name="password2" id="password2" type="password" data-parsley-equalto="#password1" required="required" />
 
+                    <!--
                     <input class="btn btn-submit" type="submit" name="submit" value="Register Now" />
+                    -->
+                    <input class="btn btn-submit" id="signup-button" type="button" name="submit" value="Register Now" />
                 </form>
             </div>
         </div>
