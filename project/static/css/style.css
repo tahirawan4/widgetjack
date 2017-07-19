@@ -117,13 +117,6 @@ html {
   text-align: center;
   width: 100%;
   bottom: 0px;
-  position: fixed;
-}
-
-@media (min-width: 786px) {
-  .footer {
-    position: absolute;
-  }
 }
 
   .footer p {

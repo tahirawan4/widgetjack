@@ -42,7 +42,7 @@
                             <div class="col-xs-10 col-xs-offset-1">
                                 <div class="row target-droppable remove-icons-class">
                                     {% for selected_widget in selected_users_widgets %}
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <a href="{{ selected_widget.widget.link }}" data-id="{{ selected_widget.widget_id }}" data-user-widget-id="{{ selected_widget.id }}" target="_blank" class="ui-draggable ui-draggable-handle count-clicks">
                                             <div class="ellipse-bottom"></div>
                                             <img src="/media/{{ selected_widget.widget.icon }}">
