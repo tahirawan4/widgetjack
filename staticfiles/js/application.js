@@ -76,29 +76,31 @@ $(document).ready(function() {
             // Add Element
             var $item = ui.draggable;
             var widgetId = $item.attr('data-id');
-            saveWidgetForUser('add', widgetId);
+            var result = saveWidgetForUser('add', widgetId);
 
-            var $itemClonend = $item.clone();
-            $itemClonend.contents().filter(function(){
-                return (this.nodeType == 3);
-            }).remove();
+            if (result) {
+                var $itemClonend = $item.clone();
+                $itemClonend.contents().filter(function(){
+                    return (this.nodeType == 3);
+                }).remove();
 
-            $itemClonend.appendTo($itemClonend.parent()).draggable({
-                revert: "invalid", // when not dropped, the item will revert back to its initial position
-                containment: "document",
-                helper: "clone",
-                cursor: "move"
-            });
+                $itemClonend.appendTo($itemClonend.parent()).draggable({
+                    revert: "invalid", // when not dropped, the item will revert back to its initial position
+                    containment: "document",
+                    helper: "clone",
+                    cursor: "move"
+                });
 
-            $block = $("<div />").addClass("col-md-3").append($itemClonend);
-            $block.find("a").append("<div class='ellipse-bottom'></div>");
-            $(".target-droppable").append($block);
-            removeElementCall();
+                $block = $("<div />").addClass("col-md-2").append($itemClonend);
+                $block.find("a").append("<div class='ellipse-bottom'></div>");
+                $(".target-droppable").append($block);
+                removeElementCall();
+            }
         },
         out: function(event, ui) {
             // Remove Element
             var $item = ui.draggable;
-            var widgetId = $item.attr('data-user-widget-id');
+            var widgetId = $item.attr('data-id');
             saveWidgetForUser('remove', widgetId);
             ($item).parent().remove();
         }
@@ -157,16 +159,25 @@ function removeElementCall() {
 
 function saveWidgetForUser(action, widgetId) {
     var csrftoken = getCookie('csrftoken');
+    var response;
 
     $.ajax({
         url: "/users_widgets/",
         type: 'POST',
+        async: false,
         data: {action: action, widget_id: widgetId},
         beforeSend: function (xhr) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         },
-        success: function(result) { }
+        success: function(result) {
+            response = true;
+        },
+        error: function (result) {
+            response = false;
+        }
     });
+
+    return response;
 }
 
 function getCookie(name) {

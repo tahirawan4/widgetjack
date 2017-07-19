@@ -45,7 +45,7 @@ def update_background(request):
     request.user.background_id = request.POST.get('background_id')
     request.user.save()
 
-    return HttpResponse(status=201)
+    return HttpResponse("success", status=201)
 
 
 @login_required
@@ -56,13 +56,18 @@ def users_widgets(request):
 
     if action == 'add':
         widget = request.POST.get('widget_id')
-        user_widget = UsersWidgets(widget_id=widget, user=user)
-        user_widget.save()
-    elif action == 'remove':
-        user_widget = UsersWidgets.objects.filter(id=widget)
-        user_widget.delete()
 
-    return HttpResponse(status=201)
+        if UsersWidgets.objects.filter(widget_id=widget, user=user).count() > 0:
+            return HttpResponse("error", status=500)
+        else:
+            user_widget = UsersWidgets(widget_id=widget, user=user)
+            user_widget.save()
+            return HttpResponse("success", status=201)
+
+    elif action == 'remove':
+        user_widget = UsersWidgets.objects.filter(user=user, widget_id=widget).first()
+        user_widget.delete()
+        return HttpResponse("success", status=201)
 
 
 @login_required
